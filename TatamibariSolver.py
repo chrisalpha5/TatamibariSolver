@@ -193,14 +193,14 @@ def rule3 (m,n,h):
                 c.append(c2)
                 dnf.append(c)
     
-    prod = list(product(*dnf))
+            prod = list(product(*dnf))
 
-    for i in range(len(prod)):
-        c = []
-        for j in range(len(prod[i])):
-            c.append(prod[i][j][0])
-            c.append(prod[i][j][1])
-        cnf.append(c)
+            for k in range(len(prod)):
+                c = []
+                for l in range(len(prod[k])):
+                    c.append(prod[k][l][0])
+                    c.append(prod[k][l][1])
+                cnf.append(c)
 
 def convertCell(m,n):
     id = []
@@ -257,9 +257,13 @@ def satsolver():
     if (h==1):
         onehint(L2,h,SL,m,n)
     else:
+        print(len(cnf))
         rule1(m,n,h)
+        print(len(cnf))
         rule2(m,n,h)
+        print(len(cnf))
         rule3(m,n,h)
+        print(len(cnf))
 
         while True:
             sat = pycosat.solve(cnf)
@@ -487,7 +491,7 @@ def browseFiles():
     canvas.configure(scrollregion=bbox, width=dw, height=dh)
 
 def reset():
-  global B, m, n, h, res, SL, filename
+  global B, m, n, h, cnf, SL, filename
 
   m = 0
   n = 0
@@ -531,11 +535,11 @@ def reset():
   dw, dh = int((w/n) * n), int((l/(m+1) * (m+1)))
   canvas.configure(scrollregion=bbox, width=dw, height=dh)
   
-  res = []
+  cnf = []
   SL = []
 
 def sollist():
-    global B,m,n,h,res,SL,SLi
+    global B,m,n,h,cnf,SL,SLi
 
     start_time = time.time() 
     exhaustive()
@@ -588,7 +592,7 @@ def sollist():
     reset()
 
 def sollist2():
-    global B,m,n,h,res,SL,SLi
+    global B,m,n,h,cnf,SL,SLi
 
     start_time = time.time() 
     satsolver()
